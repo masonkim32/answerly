@@ -39,7 +39,7 @@ class QuestionDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'answer_form':  AnswerFor(initial={
+            'answer_form':  AnswerForm(initial={
                 'user': self.request.user.id,
                 'question': self.object.id,
             })
