@@ -3,8 +3,8 @@
 <div class="col-sm-12">
     <h3>Post your answer</h3>
     <form method="post"
-            action="{% usr 'qanda:answer_question' pk=question.id %}">
-        {{ answer_from | crispy }}
+            action="{% url 'qanda:answer_question' pk=question.id %}">
+        {{ answer_form | crispy }}
         {% csrf_token %}
         <button class="btn btn-primary" type="submit"
                 namd="action" value="PREIVEW">
