@@ -16,4 +16,9 @@ urlpatterns = [
         views.QuestionDetailView.as_view(),
         name='question_detail'
     ),
+    path(
+        'q/<int:pk>/answer',
+        views.CreateAnswerView.as_view(),
+        name='answer_question',
+    ),
 ]
