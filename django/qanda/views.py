@@ -1,10 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http.response import HttpResponseBadRequest
-from django.views.generic import CreateView, DetailView
+from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
+from django.views.generic import CreateView, DetailView, UpdateView
 
-from qanda.forms import (AnswerForm, AnswerAcceptanceForm,
-                         QuestionForm,)
-from qanda.models import Question
+from qanda.forms import AnswerForm, AnswerAcceptanceForm, QuestionForm
+from qanda.models import Answer, Question
 
 
 class AskQuestionView(LoginRequiredMixin, CreateView):
@@ -85,3 +84,16 @@ class CreateAnswerView(LoginRequiredMixin, CreateView):
 
     def get_question(self):
         return Question.objects.get(pk=self.kwargs['pk'])
+
+
+class UpdateAnswerAcceptanceView(LoginRequiredMixin, UpdateView):
+    form_class = AnswerAcceptanceForm
+    queryset = Answer.objects.all()
+
+    def get_success_url(self):
+        return self.object.question.get_absolute_url()
+
+    def form_invalid(self, form):
+        return HttpResponseRequest(
+            redirect_to=self.object.question.get_absolute_url()
+        )
